@@ -6,6 +6,7 @@
 .pnp.js
 /src/package/modules/test
 /src/package/dump
+/dist
 
 # testing
 /coverage
