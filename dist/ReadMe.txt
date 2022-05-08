@@ -1,3 +1,21 @@
+Drupal library to make decoupled Drupal easier to manage/build from the frontend by implementing communication channels to the backend.
+
+Quite a few functions will be implemented over time.... and my list for now may include many or all of the following:
+
+A login function.
+Json function to call the all json endpoints.
+A Rest function, an alternative to Json function where a rest endpoint is needed.
+Search function.
+Contact form submit function.
+Flagging function.
+User registration function.
+Password reset function.
+A Pager UI
+Except for the UI components (referred to as module, sticking to Drupal definations) all functions will be designed to return an object response which will include the default Json response for the endpoint and additional details like logs or status message/code where necessary.
+
+This is will be available on npm once I start pushing to this repository.
+
+
 Important Notice: To use this library, the aspect of your app that really
 on this library's functionality must be wrapped in the Authorisation module,
 else it won't work as expected. If your whole App is dependednt on the drupal,

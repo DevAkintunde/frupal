@@ -4,8 +4,20 @@
 /node_modules
 /.pnp
 .pnp.js
+
+# excesses
 /src/package/modules/test
 /src/package/dump
+/.storybook
+/public
+/stories
+/App.css
+/App.js
+/App.test.js
+/index.css
+/index.js
+
+# compiled
 /dist
 
 # testing

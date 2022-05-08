@@ -1,70 +1,270 @@
-# Getting Started with Create React App
+# Frupal, a Drupal React JS library
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+(This ReadMe is a little scattered at the moment; sorry!!!)
+A Drupal library to make decoupled Drupal easier to manage/build from the frontend by implementing communication channels to the backend.
 
-## Available Scripts
+Quite a few functions will be implemented over time.... and my list for now may include many or all of the following:
 
-In the project directory, you can run:
+## A login function
 
-### `npm start`
+Json function to call the all json endpoints.
+A Rest function, an alternative to Json function where a rest endpoint is needed.
+Search function.
+Contact form submit function.
+Flagging function.
+User registration function.
+Password reset function.
+A Pager UI
+Except for the UI components (referred to as module, sticking to Drupal definations) all functions will be designed to return an object response which will include the default Json response for the endpoint and additional details like logs or status message/code where necessary.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This is will be available on npm once I start pushing to this repository.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Important Notice: To use this library, the aspect of your app that really
+on this library's functionality must be wrapped in the Authorisation module,
+else it won't work as expected. If your whole App is dependednt on the drupal,
+it's a good idea to put your App.js file inside the Authorisation module of the
+library.
+Like This:
+<Authorization app={<App />} />
 
-### `npm test`
+## How to Use
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Create a config file in the root of your react app and
+set your basic remote configurations as stated below:
+config file should be named as: frupal.config.js
 
-### `npm run build`
+Its important to export your default configurations as follows
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Minimum config is:
+export const frupal = {
+remote: {
+uri: "http://backendWebsiteUri.com",
+}
+};
+Backend URI is the minimum allowed to use the library in your project.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+When only your backend uri is set, it is assumed that all
+Json Api call is drupal default of jsonapi.
+That is: http://backendWebsiteUri.com/jsonapi
+If the Json Api point has however been changed manually or using
+drupal modules like 'Json Default Extras' module, please specify
+your new Json Api endpoint as below:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+export const frupal = {
+remote: {
+uri: "http://backendWebsiteUri.com",
+jsonapi: "newJsonEndpoint",
+restapi: "restapi",
+subrequests: true,
+entityRouter: true,
+},
+authenticationMethod: "access_token",
+saveTokenToLocalStorage: true,
+};
+A default endpoint is set for rest call @ restapi;
+that is: http://backendWebsiteUri.com/restapi
+You can change this as well like you changed jsonapi.
 
-### `npm run eject`
+## Extras:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Your preferred authentication method may be specified here. This
+will be used to process access control for authenticated users.
+If none is specified, all access restricted api call will be done
+with access_token. Only access_token is supported for now.
+You will probably need to install a drupal module to exports access_token on
+the login response to take advantage of this. The drupal getjwtonlogin is a good bet.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+set saveTokenToLocalStorage = true for an optional process to save your access_token
+to the browser Local Storage. It is saved as sessionToken and can easily be
+retrieved with localStorage.getItem("sessionToken").
+If you wish to save another kind of token rather than access_token, set your default
+authenticationMethod in frupal.config.js and this token key|value pair will be
+saved to localStorage.
+sessionToken is JSON stringified JSON.stringify().
+Note: it is a good idea to save your sessionToken so <Authorization /> can
+always fetch from there to keep track of returning signed in users.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+if you are using Entity Router Module for routing uri
+and subrequests Module for simultaneous multiple requests,
+then set either or both as true. This is disabled by default.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Default Drupal profile fields (User entity fields) are exported if
+you are using the Login() function and can be imported to your App with:
+import Profile from "frupal/Login";
+and providing context
+const { profile } = useContext(Profile);
+Custom profile properties can be optionally inserted by doing
+setProfile(...profile, user_badge:'Colonel')
+and swapping the context above with the one below.
+const { profile, setProfile } = useContext(Profile);
 
-## Learn More
+If you which to automatically include custom profile field to your app,
+include such fields in the config file as below:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+profile_fields: ["field_first_name", "field_last_name", "[]field_phone_nos"]
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Please follow this partner for this to work
 
-### Code Splitting
+1. Only drupal machine names are valid.
+2. Multiple value fields should be preceeded with a square bracket in front
+   []field_phone_nos
+3. Referenced fields should be preceeded with a square bracket contianing 'relation'
+   in front.
+   [relation]field_tags
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Your complete config file may look like the below:
 
-### Analyzing the Bundle Size
+export const frupal = {
+remote: {
+uri: "http://backendWebsiteUri.com",
+jsonapi: "jsonapi",
+restapi: "restapi",
+subrequests: true,
+entityRouter: true,
+},
+profile_fields: ["field_fname", "field_lname", "[]field_phone_nos", [relation]field_tags],
+authenticationMethod: "csrf_token",
+saveTokenToLocalStorage: true,
+};
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+For development purpose, you may consider the below config
+to create a dynamic configuration that differs between
+local development and deployment.
 
-### Making a Progressive Web App
+const prod = {
+remote: {
+uri: "https://mellywood.com",
+jsonapi: "jsonapi",
+restapi: "restapi",
+subrequests: true,
+entityRouter: true,
+},
+profile_fields: [
+"field_fname",
+"field_lname",
+"[]field_phone_nos",
+"[relation]field_tags]",
+],
+};
+const dev = {
+remote: {
+uri: "http://mellywood.local",
+jsonapi: "jsonapi",
+restapi: "restapi",
+subrequests: true,
+entityRouter: true,
+},
+profile_fields: [
+"field_fname",
+"field_lname",
+"[]field_phone_nos",
+"[relation]field_tags]",
+],
+};
+export const frupal = process.env.NODE_ENV === "development" ? dev : prod;
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Custom profile entity fields (that is any field not part of drupal core)
+should be added into the frupal object variable in the frupal.config.js
+file as an array of fields with a key set as 'profile_fields'
 
-### Advanced Configuration
+Example: {profiles_fields: ['field_first_name, 'field_last_name',
+[]field_phone_numbers, [relation]field_tags]}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+###Note:
 
-### Deployment
+1. All fields should be drupal field IDs.
+2. Fields that allows multiple values should be preceeded
+   with '[]' to denote it as an array.
+3. Entity reference fields should be preceeded with
+   '[relation]' to denote it as such. (Feature yet to be implemented).
+4. Every other field will be treated as single value field.
+   Note: unless the 'Token' module is called and set, you will have no
+   accss to the Profile module.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## The Login() Function.
 
-### `npm run build` fails to minify
+Please note that there's no way to check if a user is already logged in.
+You have to create a logic to handle that check yourself.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+5 variables may be provided for the Login function as named below:
+
+username, mail, password, loginType, action.
+At least one of username or mail (email) is needed with password to process
+signing in a user. When the email option is enabled, you'll have to explicitly
+set it using loginType= 'email' for it to be enabled.
+You most likely need the 'Rest Email Login' drupal module for this to work,
+as the endpoint is used to communicate with the backend.
+That is: 'mysite.com/user/email-login?\_format=json'
+
+Last but not the least, if you intend to execute a function if login is successful,
+or at any other statusCode response;
+please place your function in the 'action' property as an object with the key|values
+as action: { statusCode: 200, func: processLoggedInAction }.
+statusCode may be ignored if you only want to execute the function on successful logged In
+at code 200.
+Full Login function sample should look like below:
+Login({
+username: "myName", //optional if loginType is set
+mail: "myEmail@gmail.com", //optional. must be provided if loginType is set
+password: "myPassword.",
+loginType: 'email', //optional
+saveTokenToLocalStorage: true, //optional
+action: {
+statusCode: 200, //optional, defaults to 200
+func: loggedInAction
+} //optional
+}).then((response) => {
+console.log(response); //process whatever you want to do with the response.
+});
+Login response is returned as an object
+{
+json: "returned jsonapi response",
+log: "Any accompanying logging/message/notice/error",
+statusCode: "200", //server response status code,
+token: {}, //preferred logged in token with key and type.
+//only available if authenticationMethod is set in frupal.config.js
+
+}
+Site-wide token may be optionly set from Login() response by calling useContext and
+re-exporting response to token as follow:
+const { setToken } = useContext(Token);
+setToken(response.token) // if authenticationMethod is set in frupal.config.js,
+otherwise use the approach below.
+setToken({
+type: "access_token",
+key: response.json.access_token,
+});
+All available token can be seen in the response.json of the returned response.
+
+## The Json() Function
+
+By default Json() functions accepts an endpoint variable to fetch your json call, or an object, or an array of objects for simultaneous asyncronous calls to endpoint(s). All object must have an endpoint key to work.
+Your object variable should be in the below format:
+{
+endpoint: "node/article", //required
+headers: {
+"Content-Type": "application/vnd.api+json",
+Accept: "application/vnd.api+json",
+},
+body: {},
+method: "get",
+};
+Every key is optional except the endpoint, and are just available if you desire to make custom modifications. You will need the body option if you are making a POST, PATCH or DELETE requests.
+simultaneous or multiple request should be in objects in arrays:
+Json([
+{endpoint: 'node/article', id: "req9", waitFor: "", }, {endpoint: 'node/page',id: "req9", waitFor: "",}
+])
+Use 'id' to identify each request; if unspecified, the response will be assigned serially.
+The 'waitFor' will be used to implement dependent async calls but this feature is yet to be implemented.
+Use: Json().then((response) => console.log(response)) to return your expected results when making GET requests.
+
+## The Rest() Function
+
+The Rest Function only accepts a string endpoint as variable.
+
+The ER() Function. Using Drupal Entity Router module.
+Like Rest(), ER() Function only accepts a string endpoint as variable; this would be the uri, or pathauto (if enabled) uri, of the entity.
+
+## Th SR() Function
+
+Yet to be implemented.

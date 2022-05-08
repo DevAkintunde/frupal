@@ -52,17 +52,21 @@ var Test = function Test() {
     console.log("action processed");
   };
 
-  console.log(token); // Json({
-  //   endpoint: "node/series",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     Accept: "application/vnd.api+json",
-  //   },
-  //   body: {},
-  //   method: "get",
-  //   id: "req1",
-  //   waitFor: "", // will be available once the dependency feature of async calls have been implemented.
-  // }).then((response) => console.log(response));
+  console.log(token);
+  var output = (0, _Json.Json)([{
+    endpoint: "node/series",
+    id: "req1",
+    waitFor: "" // will be available once the dependency feature of async calls have been implemented.
+
+  }, {
+    endpoint: "node/movie",
+    id: "req9",
+    waitFor: "" // will be available once the dependency feature of async calls have been implemented.
+
+  }]);
+  output.then(function (res) {
+    console.log(res);
+  }); // .then((response) => console.log(response));
   // Json("").then((response) => console.log(response));
   // Json("node/movie").then((response) => console.log(response));
   // Json().then((response) => console.log(response));
