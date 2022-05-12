@@ -18,7 +18,14 @@ var Rest = function Rest(endpoint) {
       "content-type": "application/json"
     }
   }).then(function (res) {
-    return res.json();
+    if (res.status === 200) {
+      return res.json();
+    } else {
+      return {
+        status: res.status,
+        statusText: res.statusText ? res.statusText : null
+      };
+    }
   }).then(function (resjson) {
     return resjson;
   }).catch(function () {

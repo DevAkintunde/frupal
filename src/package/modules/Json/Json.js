@@ -78,14 +78,21 @@ export const Json = (data) => {
         if (!data.endpoint) {
           return { log: "No endpoint specified." };
         } else {
-          return res.json();
+          if (res.status === 200) {
+            return res.json();
+          } else {
+            return {
+              status: res.status,
+              statusText: res.statusText ? res.statusText : null,
+            };
+          }
         }
       })
       .then((resjson) => {
         return resjson;
       });
   }
-  //case 2; check is imported data is an array of multiple objects
+  //case 2; check if imported data is an array of multiple objects
   else if (data && Array.isArray(data) && typeof data !== "string") {
     //case 2... allow to wait for dependent async to be implemented later;
     let promises = [];
@@ -146,7 +153,14 @@ export const Json = (data) => {
         });
       promises.push(
         promiseCall().then((res) => {
-          return res.json();
+          if (res.status === 200) {
+            return res.json();
+          } else {
+            return {
+              status: res.status,
+              statusText: res.statusText ? res.statusText : null,
+            };
+          }
         })
       );
       if (thisCall.id) {
@@ -179,12 +193,19 @@ export const Json = (data) => {
       },
     })
       .then((res) => {
-        return res.json();
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          return {
+            status: res.status,
+            statusText: res.statusText ? res.statusText : null,
+          };
+        }
       })
       .then((resjson) => {
         return resjson;
       })
-      .catch((error) => {
+      .catch(() => {
         return {
           log: "Endpoint not found.",
         };

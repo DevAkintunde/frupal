@@ -11,7 +11,14 @@ export const ER = (endpoint) => {
     },
   })
     .then((res) => {
-      return res.json();
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return {
+          status: res.status,
+          statusText: res.statusText ? res.statusText : null,
+        };
+      }
     })
     .then((resjson) => {
       return resjson;

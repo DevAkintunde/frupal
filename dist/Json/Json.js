@@ -80,12 +80,19 @@ var Json = function Json(data) {
           log: "No endpoint specified."
         };
       } else {
-        return res.json();
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          return {
+            status: res.status,
+            statusText: res.statusText ? res.statusText : null
+          };
+        }
       }
     }).then(function (resjson) {
       return resjson;
     });
-  } //case 2; check is imported data is an array of multiple objects
+  } //case 2; check if imported data is an array of multiple objects
   else if (data && Array.isArray(data) && typeof data !== "string") {
     //case 2... allow to wait for dependent async to be implemented later;
     var promises = [];
@@ -137,7 +144,14 @@ var Json = function Json(data) {
       };
 
       promises.push(promiseCall().then(function (res) {
-        return res.json();
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          return {
+            status: res.status,
+            statusText: res.statusText ? res.statusText : null
+          };
+        }
       }));
 
       if (thisCall.id) {
@@ -191,10 +205,17 @@ var Json = function Json(data) {
         "content-type": "application/vnd.api+json"
       }
     }).then(function (res) {
-      return res.json();
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return {
+          status: res.status,
+          statusText: res.statusText ? res.statusText : null
+        };
+      }
     }).then(function (resjson) {
       return resjson;
-    }).catch(function (error) {
+    }).catch(function () {
       return {
         log: "Endpoint not found."
       };
