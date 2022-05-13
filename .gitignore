@@ -4,8 +4,6 @@
 /node_modules
 /.pnp
 .pnp.js
-
-# excesses
 /src/library/frupal/modules/test
 /src/library/dump
 /src/stories
@@ -21,9 +19,6 @@ frupal
 /src/index.js
 /src/setupTests.js
 /src/storybook.test.js
-
-# compiled
-/dist
 
 # testing
 /coverage
