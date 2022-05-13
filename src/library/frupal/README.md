@@ -1,8 +1,10 @@
 # Frupal, a Drupal React JS library
 
-(This ReadMe is a little scattered at the moment; sorry!!!)
-
 A Drupal library to make decoupled Drupal easier to manage/build from the frontend by implementing common communication channels to the backend.
+
+All modules/functions/features may be imported from 'frupal/modules'
+
+(This ReadMe is still a little scattered at the moment; sorry!!!)
 
 Quite a few functions will be implemented over time.... and my list for now may include many, all or more of the following:
 

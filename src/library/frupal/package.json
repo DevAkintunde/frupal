@@ -1,0 +1,28 @@
+{
+  "name": "frupal",
+  "version": "0.9.20",
+  "description": "A React JS library for Drupal to make decoupled Drupal easier to manage/build from the frontend by implementing common communication channels to the backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevAkintunde/frupal.git"
+  },
+  "keywords": [
+    "Drupal",
+    "React JS",
+    "decoupled drupal"
+  ],
+  "author": "devakintunde@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DevAkintunde/frupal/issues"
+  },
+  "homepage": "https://github.com/DevAkintunde/frupal#readme",
+  "peerDependencies": {
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
+  }
+}

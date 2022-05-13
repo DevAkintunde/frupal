@@ -6,16 +6,20 @@
 .pnp.js
 
 # excesses
-/src/package/modules/test
-/src/package/dump
+/src/library/frupal/modules/test
+/src/library/dump
+/src/stories
 /.storybook
 /public
-/stories
-/App.css
-/App.js
-/App.test.js
-/index.css
-/index.js
+/src/stories
+/src/App.css
+/src/App.js
+/src/App.test.js
+/src/frupal.config.js
+/src/index.css
+/src/index.js
+/src/setupTests.js
+/src/storybook.test.js
 
 # compiled
 /dist

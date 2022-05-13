@@ -1,4 +1,4 @@
-import { frupal as userConfig } from "../../frupal.config";
+import { frupal as userConfig } from "../../../frupal.config";
 
 const index = "/";
 const uri =

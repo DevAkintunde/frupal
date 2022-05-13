@@ -5,8 +5,8 @@
     "dist",
     "README.md"
   ],
-  "version": "0.9.2",
-  "private": false,
+  "version": "0.9.20",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DevAkintunde/frupal.git"
@@ -18,8 +18,8 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "clean": "rimraf dist",
-    "compile": "npm run clean && cross-env NODE_ENV=production babel src/package/modules --out-dir dist --copy-files --ignore __test__,__tests__,spec.js,test.js,stories.js,__snapshots__"
+    "clean-frupal": "rimraf frupal",
+    "compile": "npm run clean-frupal && cross-env NODE_ENV=production babel src/library/frupal --out-dir frupal --copy-files --ignore __test__,__tests__,spec.js,test.js,stories.js,__snapshots__"
   },
   "eslintConfig": {
     "extends": [

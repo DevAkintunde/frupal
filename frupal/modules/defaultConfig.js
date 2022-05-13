@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.frupalProfileFields = exports.frupal = void 0;
 
-var _frupal = require("../../frupal.config");
+var _frupal = require("../../../frupal.config");
 
 var index = "/";
 var uri = _frupal.frupal && _frupal.frupal.remote && _frupal.frupal.remote.uri ? _frupal.frupal.remote.uri : null;
