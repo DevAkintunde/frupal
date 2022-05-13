@@ -9,8 +9,9 @@
 /src/library/frupal/modules/test
 /src/library/dump
 /src/stories
-/.storybook
-/public
+.storybook
+public
+frupal
 /src/stories
 /src/App.css
 /src/App.js
