@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = Login;
 
-var _defaultConfig = require("../defaultConfig");
+var _defaultConfig = require("../../defaultConfig");
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 

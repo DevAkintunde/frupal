@@ -56,19 +56,6 @@ Object.keys(_Login).forEach(function (key) {
   });
 });
 
-var _Remote = require("./Remote");
-
-Object.keys(_Remote).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _Remote[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _Remote[key];
-    }
-  });
-});
-
 var _Rest = require("./Rest");
 
 Object.keys(_Rest).forEach(function (key) {
@@ -78,6 +65,19 @@ Object.keys(_Rest).forEach(function (key) {
     enumerable: true,
     get: function get() {
       return _Rest[key];
+    }
+  });
+});
+
+var _Contact = require("./Contact");
+
+Object.keys(_Contact).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (key in exports && exports[key] === _Contact[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _Contact[key];
     }
   });
 });

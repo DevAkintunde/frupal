@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Rest = void 0;
 
-var _defaultConfig = require("../defaultConfig");
+var _defaultConfig = require("../../defaultConfig");
 
 // const Rest = frupal.remote.rest;
 var Rest = function Rest(endpoint) {

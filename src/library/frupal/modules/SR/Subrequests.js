@@ -1,4 +1,4 @@
-import { frupal } from "../defaultConfig";
+import { frupal } from "../../defaultConfig";
 
 const SR = frupal.remote.subrequests;
 

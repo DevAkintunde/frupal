@@ -1,4 +1,4 @@
-import { frupal } from "../defaultConfig";
+import { frupal } from "../../defaultConfig";
 
 export const Json = (data) => {
   // only GET, POST, PATCH and DELETE are support.

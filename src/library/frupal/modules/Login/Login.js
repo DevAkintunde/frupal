@@ -1,4 +1,4 @@
-import { frupal } from "../defaultConfig";
+import { frupal } from "../../defaultConfig";
 import PropTypes from "prop-types";
 
 export default function Login(data) {
