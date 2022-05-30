@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ER = void 0;
 
-var _defaultConfig = require("../defaultConfig");
+var _defaultConfig = require("../../defaultConfig");
 
 var ER = function ER(endpoint) {
   var entityRouter = _defaultConfig.frupal.remote.entityRouter;

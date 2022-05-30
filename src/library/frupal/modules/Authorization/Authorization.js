@@ -1,7 +1,6 @@
-import React from "react";
-import { useState, useEffect, useMemo } from "react";
-import { frupal } from "../defaultConfig";
-import { frupalProfileFields } from "../defaultConfig";
+import React, { useState, useEffect, useMemo } from "react";
+import { frupal } from "../../defaultConfig";
+import { frupalProfileFields } from "../../defaultConfig";
 import PropTypes from "prop-types";
 import { Token } from "./Token";
 import { Auth } from "./Auth";

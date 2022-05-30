@@ -1,4 +1,4 @@
-import { frupal } from "../defaultConfig";
+import { frupal } from "../../defaultConfig";
 
 // const Rest = frupal.remote.rest;
 export const Rest = (endpoint) => {

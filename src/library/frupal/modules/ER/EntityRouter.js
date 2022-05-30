@@ -1,4 +1,4 @@
-import { frupal } from "../defaultConfig";
+import { frupal } from "../../defaultConfig";
 
 export const ER = (endpoint) => {
   const entityRouter = frupal.remote.entityRouter;

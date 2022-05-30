@@ -255,6 +255,21 @@ The Rest Function only accepts a string endpoint as variable.
 
 Using Drupal Entity Router module. Like Rest(), ER() Function only accepts a string endpoint as variable; this would be the url, or pathauto (if enabled) url, of the entity.
 
-## Th SR() Function
+## The SR() Function
 
 Yet to be implemented.
+
+## The Contact() Function
+
+Drupal default contact module must be enabled on your drupal website to use this function.
+If there's no custom modification and you're just using the default feedback form, then only provide object like the one below in your function.
+<code>
+{
+form: "site_feedback_form",// optional. you only need to specify a form if you're using a form diferent from drupal default feedback form.
+name: "person submitting the form", //optional and will default to 'Guest'
+mail: "email of user submitting the form", //required
+subject: "subject of message", //optional and default to 'General'
+message: "message body", //required
+profile: profile, //if you use the profile context feature, then you can use it here for autheticated users, and mail and name above will be ingored in favour of the profile info.
+};
+</code>

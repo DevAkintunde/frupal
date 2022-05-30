@@ -9,7 +9,7 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _defaultConfig = require("../defaultConfig");
+var _defaultConfig = require("../../defaultConfig");
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 

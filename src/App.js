@@ -1,6 +1,6 @@
 import "./App.css";
-import { Authorization } from "./package/modules/Authorization";
-import { Test } from "./package/modules/test/Test";
+import { Authorization } from "./library/frupal/modules/Authorization";
+import { Test } from "./library/frupal/modules/test/Test";
 
 function App() {
   const imported = (

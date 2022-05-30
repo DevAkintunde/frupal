@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _defaultConfig = require("../defaultConfig");
+var _defaultConfig = require("../../defaultConfig");
 
 var SR = _defaultConfig.frupal.remote.subrequests;
 var _default = SR;
