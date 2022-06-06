@@ -35,7 +35,7 @@ Frupal is will be available on npm soon after I start pushing to this repository
 To use the authenticated (logged in user specific processes) specific context and functions of this library, the aspect of your app that required authentication must be wrapped in the Authorisation module, else it won't work as expected. If your whole App is dependednt on the drupal and required authenticated user access, it's a good idea to put your App.js file inside the Authorisation module of the
 library.
 Like This:
-<Authorization app={<App />} />
+`<Authorization app={<App />} />`
 This allows 'profile' context amongs others to be available for use by simply importing React context API. Maybe i'll attach an issue or page to show this feature at work soon.
 
 ## How to Use
@@ -95,7 +95,9 @@ Your preferred authentication method may be specified here. This will be used to
 
 set saveTokenToLocalStorage = true for an optional process to save your access_token to the browser Local Storage. It is saved as sessionToken and can easily be retrieved with localStorage.getItem("sessionToken"). An option to save this in sessionStorage may be implement later.
 If you wish to save another kind of token rather than access_token, set your default authenticationMethod in frupal.config.js and this token key|value pair will be saved to localStorage. sessionToken is JSON stringified JSON.stringify().
-Note: it is a good idea to save your sessionToken so <Authorization /> can always fetch from there to keep track of returning signed in users.
+Note: it is a good idea to save your sessionToken so
+`<Authorization />`
+can always fetch from there to keep track of returning signed in users.
 
 if you are using 'Entity Router' Module for routing uri and subrequests Module for simultaneous multiple requests, then set either or both as true. Entity Router feature is disabled by default however the Subrequest module feature is yet to be implemented. Pardon me.
 
@@ -186,7 +188,8 @@ Please note that there's no way to check if a user is already logged in. You hav
 `username, mail, password, loginType, action.`
 
 At least one of username or mail (email) is needed with password to process signing in a user. When the email option is enabled, you'll have to explicitly set it using loginType= 'email' for it to be enabled.
-You most likely need the 'Rest Email Login' drupal module for this to work, as the endpoint is used to communicate with the backend. That is: 'mysite.com/user/email-login?\_format=json'
+You most likely need the 'Rest Email Login' drupal module for this to work, as the endpoint is used to communicate with the backend. That is:
+<code>mysite.com/user/email-login?\_format=json</code>
 
 Last but not the least, if you intend to execute a function if login is successful, or at any other statusCode response; please place your function in the 'action' property as an object with the key|values as action:
 `{ statusCode: 200, func: processLoggedInAction }.`
@@ -286,4 +289,35 @@ subject: "subject of message", //optional and default to 'General'
 message: "message body", //required
 profile: profile, //if you use the profile context feature, then you can use it here for autheticated users, and mail and name above will be ingored in favour of the profile info.
 };
+```
+
+## Pager UI
+
+At the barest minimum, the `url` is required. You will also need the `pageContents` function to import your remote data. Saving the importd pageContent in a state is a good idea.
+
+` <Pager url={url} pageContents={(pageContent) => setPagerData(pageContent)} />`
+
+Pager types are similar to Drupal Views' approach and options are:
+
+1. mini; equavalent to mini-pager in views
+2. more; Simple adds the next lsit to the bottom of current items.
+3. infinite; extra type to allow infinite loading. Pagination count may be optionally specified. Note: yet to be implemented.
+4. constant; Print a one time specified list.
+   Since JsonApi pagination is an async call, full pager similar to Drupal Views isn't implemented at the moment for efficiency reason on my part.
+   Default is always mini when none, or an unknown type is specified.
+
+Full pager options is illustrated below:
+
+```
+<Pager
+         url={dataUrl}
+          pageContents={(pageContent) => setPagerData(pageContent)}
+          type="mini" //options include mini/more/constant
+          authentication={false} //Boolean. only available if using the authentication module
+          pagination={10} // nodes or entity per page
+          buttonClass="text-color-green bg-blue" //classes for next and previous buttons
+          previousButton={<FaArrowAltCircleLeft />} //Previous button. Can be string or JSX element. Defaults to '<'
+          nextButton={<FaArrowAltCircleRight />} //Next button. Can be string or JSX element. Defaults to '>'
+          className="mt-5 flex gap-3 w-fit mx-auto items-center" //classes for the pager itself.
+        />
 ```

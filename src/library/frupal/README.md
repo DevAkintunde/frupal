@@ -35,7 +35,7 @@ Frupal is will be available on npm soon after I start pushing to this repository
 To use the authenticated (logged in user specific processes) specific context and functions of this library, the aspect of your app that required authentication must be wrapped in the Authorisation module, else it won't work as expected. If your whole App is dependednt on the drupal and required authenticated user access, it's a good idea to put your App.js file inside the Authorisation module of the
 library.
 Like This:
-<Authorization app={<App />} />
+`<Authorization app={<App />} />`
 This allows 'profile' context amongs others to be available for use by simply importing React context API. Maybe i'll attach an issue or page to show this feature at work soon.
 
 ## How to Use
@@ -95,7 +95,9 @@ Your preferred authentication method may be specified here. This will be used to
 
 set saveTokenToLocalStorage = true for an optional process to save your access_token to the browser Local Storage. It is saved as sessionToken and can easily be retrieved with localStorage.getItem("sessionToken"). An option to save this in sessionStorage may be implement later.
 If you wish to save another kind of token rather than access_token, set your default authenticationMethod in frupal.config.js and this token key|value pair will be saved to localStorage. sessionToken is JSON stringified JSON.stringify().
-Note: it is a good idea to save your sessionToken so <Authorization /> can always fetch from there to keep track of returning signed in users.
+Note: it is a good idea to save your sessionToken so
+`<Authorization />`
+can always fetch from there to keep track of returning signed in users.
 
 if you are using 'Entity Router' Module for routing uri and subrequests Module for simultaneous multiple requests, then set either or both as true. Entity Router feature is disabled by default however the Subrequest module feature is yet to be implemented. Pardon me.
 
@@ -291,24 +293,21 @@ profile: profile, //if you use the profile context feature, then you can use it 
 
 ## Pager UI
 
-````
-   <Pager
-        url={url}
-        pageContents={(pageContent) => setPagerData(pageContent)}
-      />
-```
+At the barest minimum, the `url` is required. You will also need the `pageContents` function to import your remote data. Saving the importd pageContent in a state is a good idea.
 
-T the barest minimum, the `url` is required. You will also need the `pageContents` function to import your remote data. Saving the importd pageContent in a state is a good idea.
+` <Pager url={url} pageContents={(pageContent) => setPagerData(pageContent)} />`
 
- Pager types are similar to Drupal Views' approach and options are:
-  1. mini; equavalent to mini-pager in views
-  2. more; Simple adds the next lsit to the bottom of current items.
-  3. infinite; extra type to allow infinite loading. Pagination count may be optionally specified. Note: yet to be implemented.
-  4. constant; Print a one time specified list.
-  Since JsonApi pagination is an async call, full pager similar to Drupal Views isn't implemented at the moment for efficiency reason on my part.
-  Default is always mini when none, or an unknown type is specified.
+Pager types are similar to Drupal Views' approach and options are:
+
+1. mini; equavalent to mini-pager in views
+2. more; Simple adds the next lsit to the bottom of current items.
+3. infinite; extra type to allow infinite loading. Pagination count may be optionally specified. Note: yet to be implemented.
+4. constant; Print a one time specified list.
+   Since JsonApi pagination is an async call, full pager similar to Drupal Views isn't implemented at the moment for efficiency reason on my part.
+   Default is always mini when none, or an unknown type is specified.
 
 Full pager options is illustrated below:
+
 ```
 <Pager
          url={dataUrl}
@@ -322,4 +321,3 @@ Full pager options is illustrated below:
           className="mt-5 flex gap-3 w-fit mx-auto items-center" //classes for the pager itself.
         />
 ```
-````
