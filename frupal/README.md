@@ -41,7 +41,8 @@ This allows 'profile' context amongs others to be available for use by simply im
 ## How to Use
 
 Create a config file, as frupal.config.js, in the root of your react app and set your basic remote configurations as stated below:
-<code>
+
+```
 export const frupal = {
 remote: {
 uri: "http://backendWebsiteUri.com",
@@ -53,21 +54,25 @@ entityRouter: true,
 authenticationMethod: "access_token",
 saveTokenToLocalStorage: true,
 };
-</code>
+```
+
 While must of the options are optional, it is important to export your Minimum default config as:
-<code>
+
+```
 export const frupal = {
 remote: {
 uri: "http://backendWebsiteUri.com",
 }
 };
-</code>
+```
+
 Backend URI is the minimum allowed to use the library in your project.
 
 When only your backend uri is set, it is assumed that all Json Api call is drupal default of 'jsonapi'.
 That is: http://backendWebsiteUri.com/jsonapi
 If the Json Api point has however been changed manually or using drupal modules like 'Json Default Extras' module, please specify your new Json Api endpoint as below:
-<code>
+
+```
 export const frupal = {
 remote: {
 uri: "http://backendWebsiteUri.com",
@@ -79,7 +84,8 @@ entityRouter: true,
 authenticationMethod: "access_token",
 saveTokenToLocalStorage: true,
 };
-</code>
+```
+
 A default endpoint is set for rest call @ restapi; that is: http://backendWebsiteUri.com/restapi
 You can change this as well like you changed jsonapi.
 
@@ -95,14 +101,14 @@ if you are using 'Entity Router' Module for routing uri and subrequests Module f
 
 Default Drupal profile fields (User entity fields) will be retruned with your response if you are using the Login() function (see below sections) and can be imported to your App with the profile context by...
 
-<code>import Profile from "frupal/Authorization";</code>
+`import Profile from "frupal/Authorization";`
 and providing context
-<code>const { profile } = useContext(Profile);</code>
+`const { profile } = useContext(Profile);`
 
 Custom profile properties can be optionally inserted by doing
-<code>setProfile(...profile, user_badge:'Colonel')</code>
+`setProfile(...profile, user_badge:'Colonel')`
 and swapping the context above with the one below.
-<code>const { profile, setProfile } = useContext(Profile);</code>
+`const { profile, setProfile } = useContext(Profile);`
 
 If you which to automatically include custom profile field to your app however, include such fields in the config file as below:
 
@@ -116,7 +122,8 @@ Please follow this partner for this to work
    [relation]field_tags //Note: yet to be implemented.
 
 Your complete config file may look like the below:
-<code>
+
+```
 export const frupal = {
 remote: {
 uri: "http://backendWebsiteUri.com",
@@ -129,11 +136,11 @@ profile_fields: ["field_fname", "field_lname", "field_phone_nos", [relation]fiel
 authenticationMethod: "csrf_token", //if using drupal csrf_token
 saveTokenToLocalStorage: true,
 };
-</code>
+```
 
 For development purpose, you may consider the below config to create a dynamic configuration that environment specific configuration between local development and remote deployment.
 
-<code>
+```
 const prod = {
    remote: {
       uri: "https://mellywood.com",
@@ -165,7 +172,7 @@ const dev = {
    ],
 };
 export const frupal = process.env.NODE_ENV === "development" ? dev : prod;
-</code>
+```
 
 #### Note:
 
@@ -176,15 +183,16 @@ Unless the 'Token' module is called and set, you will have no access to the func
 Please note that there's no way to check if a user is already logged in. You have to create a logic to handle that check yourself.
 
 5 variables may be provided for the Login function as named below:
-<code>username, mail, password, loginType, action.</code>
+`username, mail, password, loginType, action.`
 
 At least one of username or mail (email) is needed with password to process signing in a user. When the email option is enabled, you'll have to explicitly set it using loginType= 'email' for it to be enabled.
 You most likely need the 'Rest Email Login' drupal module for this to work, as the endpoint is used to communicate with the backend. That is: 'mysite.com/user/email-login?\_format=json'
 
 Last but not the least, if you intend to execute a function if login is successful, or at any other statusCode response; please place your function in the 'action' property as an object with the key|values as action:
-<code>{ statusCode: 200, func: processLoggedInAction }.</code>
+`{ statusCode: 200, func: processLoggedInAction }.`
 statusCode may be ignored if you only want to execute the function on successful logged In at code 200. Full Login function sample should look like below:
-<code>
+
+```
 Login({
 username: "myName", //optional if loginType is set to email
 mail: "myEmail@gmail.com", //optional. Must be provided if loginType is set to email
@@ -198,35 +206,39 @@ func: loggedInAction //you can import a callback function to be processed at a s
 }).then((response) => {
 console.log(response); //process whatever you want to do with the response.
 });
-</code>
+```
 
 Login response is returned as an object
-<code>
+
+```
 {
 json: "returned jsonapi response",
 log: "Any accompanying logging/message/notice/error",
 statusCode: "200", //server response status code,
 token: {}, //preferred logged in token with key and type. //only available if authenticationMethod is set in frupal.config.js
 }
-</code>
+```
 
 Site-wide token may be optionly set from Login() response by calling useContext and
 re-exporting response to token as follow:
-<code>
+
+```
 const { setToken } = useContext(Token);
 setToken(response.token) // if authenticationMethod is set in frupal.config.js, otherwise use the approach below.
 setToken({
 type: "access_token", //if you're using access_token or provide any other you are using
 key: response.json.access_token,
 });
-</code>
+```
+
 All available token can be seen in the response.json of the returned response.
 
 ## The Json() Function
 
 By default Json() functions accepts an endpoint variable to fetch your async json call, or an object, or an array of objects for simultaneous asyncronous calls to endpoint(s). All object must have an endpoint key to work.
 Your object variable should be in the below format:
-<code>
+
+```
 {
 endpoint: "node/article", //required
 headers: {
@@ -236,7 +248,8 @@ Accept: "application/vnd.api+json",
 body: {},
 method: "get",
 };
-</code>
+```
+
 Every key is optional except the endpoint, and are just available if you desire to make custom modifications. You will likely need the body option if you are making a POST, PATCH or DELETE requests.
 Simultaneous or multiple asyc request should be in objects in arrays:
 Json([
@@ -263,7 +276,8 @@ Yet to be implemented.
 
 Drupal default contact module must be enabled on your drupal website to use this function.
 If there's no custom modification and you're just using the default feedback form, then only provide object like the one below in your function.
-<code>
+
+```
 {
 form: "site_feedback_form",// optional. you only need to specify a form if you're using a form diferent from drupal default feedback form.
 name: "person submitting the form", //optional and will default to 'Guest'
@@ -272,4 +286,4 @@ subject: "subject of message", //optional and default to 'General'
 message: "message body", //required
 profile: profile, //if you use the profile context feature, then you can use it here for autheticated users, and mail and name above will be ingored in favour of the profile info.
 };
-</code>
+```
