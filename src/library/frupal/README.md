@@ -310,14 +310,14 @@ Full pager options is illustrated below:
 
 ```
 <Pager
-         url={dataUrl}
-          pageContents={(pageContent) => setPagerData(pageContent)}
-          type="mini" //options include mini/more/constant
-          authentication={false} //Boolean. only available if using the authentication module
-          pagination={10} // nodes or entity per page
-          buttonClass="text-color-green bg-blue" //classes for next and previous buttons
-          previousButton={<FaArrowAltCircleLeft />} //Previous button. Can be string or JSX element. Defaults to '<'
-          nextButton={<FaArrowAltCircleRight />} //Next button. Can be string or JSX element. Defaults to '>'
-          className="mt-5 flex gap-3 w-fit mx-auto items-center" //classes for the pager itself.
-        />
+   url={dataUrl}
+   pageContents={(pageContent) => setPagerData(pageContent)}
+   type="mini" //options include mini/more/constant
+   authentication={false} //Boolean. only available if using the authentication module
+   pagination={10} // nodes or entity per page
+   buttonClass="text-color-green bg-blue" //classes for next and previous buttons
+   previousButton={<FaArrowAltCircleLeft />} //Previous button. Can be string or JSX element. Defaults to '<'
+   nextButton={<FaArrowAltCircleRight />} //Next button. Can be string or JSX element. Defaults to '>'
+   className="mt-5 flex gap-3 w-fit mx-auto items-center" //classes for the pager itself.
+/>
 ```
