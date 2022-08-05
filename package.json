@@ -5,7 +5,7 @@
     "dist",
     "README.md"
   ],
-  "version": "0.9.21",
+  "version": "0.9.23",
   "private": true,
   "repository": {
     "type": "git",
@@ -51,11 +51,12 @@
   },
   "peerDependencies": {
     "react": "^18.1.0",
-    "react-scripts": "5.0.1"
+    "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",
     "@babel/preset-env": "^7.16.11",
+    "react-scripts": "5.0.1",
     "@babel/preset-react": "^7.16.7",
     "@storybook/addon-actions": "^6.4.22",
     "@storybook/addon-essentials": "^6.4.22",
