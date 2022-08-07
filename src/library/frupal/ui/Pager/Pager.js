@@ -11,7 +11,10 @@ const Pager = ({
   previousButton,
   nextButton,
   className,
+  enablePageOne,
 }) => {
+  const location = new URL(window.location);
+
   /* Pager types are similar to Drupal Views' approach and options are:
   1. mini; equivalent to mini-pager in views
   2. more; Simple adds the next list to the bottom of current items.
@@ -21,12 +24,29 @@ const Pager = ({
   Default is always mini when none, or an unknown type is specified.
   */
 
-  const { token } = useContext(Token);
-  const [offset, setOffset] = useState({ number: 0, direction: "next" });
-  const [perPageCount, setPerPageCount] = useState(10);
-  const [pageNumber, setPageNumber] = useState(1);
+  /* Props definations 
+    pageContents: Data from server
+    url: Destination Url to fetch data
+    type: Pager Type. mini/ more/ infinite/ constant
+    pagination: Number of data content per page
+    buttonClass: Styling for pager button imported as CSS classes
+    previousButton: Previous button label
+    nextButton Next button label
+    className: Pager UI CSS classes for styling
+    enablePageOne: By default, "page=1" is ignored in url injection. Set prop as true to inject this in URL when on page one.
+  */
 
-  const [pagerer, setPagerer] = useState({ direction: "+", trigger: "" });
+  const { token } = useContext(Token);
+  const [perPageCount, setPerPageCount] = useState(10);
+  let pageParam = location.searchParams.has("page")
+    ? location.searchParams.get("page") * 1
+    : 0;
+  const [pageNumber, setPageNumber] = useState(pageParam ? pageParam : 1);
+
+  const [pagerer, setPagerer] = useState({
+    direction: pageParam > 1 ? "+-" : "+",
+    trigger: "",
+  });
   const [pageContent, setPageContent] = useState({
     previous: "",
     current: "",
@@ -43,6 +63,14 @@ const Pager = ({
     }
   }, [pagination]);
 
+  const [offset, setOffset] = useState({
+    number:
+      pageParam && pageParam > 1
+        ? pageParam * (pagination ? pagination : perPageCount) - 3
+        : 0,
+    direction: "next",
+  });
+
   //construct pager
   const thisPager = url.includes("?")
     ? url + "&page[limit]=" + perPageCount
@@ -51,21 +79,25 @@ const Pager = ({
     offset.number > 0
       ? thisPager + "&page[offset]=" + offset.number
       : thisPager;
+
   //reset mounted pager and unrelated page navigation
   useEffect(() => {
     if (url) {
-      setOffset({ number: 0, direction: "next" });
+      //setOffset({ number: 0, direction: "next" });
       setFirstPagerFetch(true);
-      setPagerer({ direction: "+", trigger: "" });
+      //setPagerer({ direction: "+", trigger: "" });
     }
   }, [url]);
 
   //use to controll rerendering on useEffects
   //triggered by pagerer which has multiple dependencies
   //const [pagererRenderer, setPagererRenderer] = useState();
+
   //use to controll rerendering on useEffects
   //triggered by filterUpdateTrigger which has multiple dependencies
   //const [filterUpdateTriggerRenderer, setFilterUpdateTriggerRenderer] = useState();
+
+  // Fetch data using Json() module
   useEffect(() => {
     let isMounted = true;
     const getContent = async () => {
@@ -74,9 +106,34 @@ const Pager = ({
         headers: { Authorization: "Bearer " + token.key },
       }).then((outputData) => {
         if (isMounted) {
-          //console.log(outputData);
           if (outputData && outputData.data) {
-            if (
+            if (pagerer.direction === "+-") {
+              if (outputData.data.length > 0) {
+                setPageContent({ previous: "", current: outputData, next: "" });
+                setPagerer({ direction: "-+-", trigger: Date.now() });
+                let offsetDiff = offset.number - perPageCount;
+                setOffset({
+                  number: offsetDiff > 0 ? offsetDiff : 0,
+                  direction: "previous",
+                });
+                //setFirstPagerFetch(false);
+              } else {
+                setOffset({ number: 0, direction: "next" });
+                setPagerer({ direction: "+", trigger: "" });
+                setPageNumber(1);
+              }
+            } else if (pagerer.direction === "-+-") {
+              let thisContent = pageContent;
+              thisContent.previous = outputData;
+              setPageContent(thisContent);
+              setPagerer({ direction: "+", trigger: Date.now() });
+              setOffset({
+                number: offset.number + perPageCount * 2,
+                direction: "previous-",
+              });
+              setPreviousActive(true);
+              setFirstPagerFetch(false);
+            } else if (
               pagerer.direction === "+" &&
               pagerer.trigger !== "" &&
               firstPagerFetch === false
@@ -135,6 +192,7 @@ const Pager = ({
     pageContent,
     previousActive,
     thisOffset,
+    perPageCount,
   ]);
 
   //use to control rerendering on useEffects
@@ -222,6 +280,12 @@ const Pager = ({
         next: "",
       });
       setPagerer({ direction: "+", trigger: Date.now() });
+      if (pageParam) {
+        location.searchParams.set("page", pageNumber + 1);
+      } else {
+        location.searchParams.append("page", pageNumber + 1);
+      }
+      window.history.pushState({}, "", location);
       setPageNumber((current) => current + 1);
     }
   };
@@ -248,10 +312,20 @@ const Pager = ({
         next: currentContent,
       });
       setPagerer({ direction: "-", trigger: Date.now() });
+      if (pageParam) {
+        if (enablePageOne && pageParam > 1) {
+          location.searchParams.set("page", pageNumber - 1);
+        } else if (pageParam > 2) {
+          location.searchParams.set("page", pageNumber - 1);
+        } else {
+          location.searchParams.delete("page");
+        }
+        window.history.pushState({}, "", location);
+      }
       setPageNumber((current) => current - 1);
     }
   };
-  // console.log(pageContent);
+  //console.log(pageContent);
   //use to control rerendering on useEffects
   //triggered by pageContent which has multiple dependencies
   const [pageContentsRenderer, setPageContentsRenderer] = useState();
@@ -267,7 +341,6 @@ const Pager = ({
   }, [pageContent, pageContents, pageContentsRenderer, type]);
 
   //console.log(pageContent.current)
-  console.log(pageNumber);
   return pageContent &&
     pageContent.current &&
     (pageContent.next || pageContent.previous) ? (
