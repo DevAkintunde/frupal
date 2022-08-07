@@ -1,6 +1,6 @@
 {
   "name": "frupal",
-  "version": "0.9.22",
+  "version": "0.9.24",
   "description": "A React JS library for Drupal to make decoupled Drupal easier to manage/build from the frontend by implementing common communication channels to the backend",
   "main": "index.js",
   "scripts": {

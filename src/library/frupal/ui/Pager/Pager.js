@@ -66,7 +66,8 @@ const Pager = ({
   const [offset, setOffset] = useState({
     number:
       pageParam && pageParam > 1
-        ? pageParam * (pagination ? pagination : perPageCount) - 3
+        ? pageParam * (pagination ? pagination : perPageCount) -
+          (pagination ? pagination : perPageCount)
         : 0,
     direction: "next",
   });

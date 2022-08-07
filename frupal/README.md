@@ -1,5 +1,9 @@
 # Frupal, a Drupal React JS library
 
+(Update: Pager UI v23 now injects 'page=1' into the url; which now supports proper pagination.
+Nested pagination temporarily not support else such nested pager must be set to 'constant' type.
+You can keep using v22 if you need nested pagination.)
+
 A Drupal library to make decoupled Drupal easier to manage/build from the frontend by implementing common communication channels to the backend.
 
 All modules/functions/features may be imported from 'frupal/modules'
@@ -311,6 +315,7 @@ Full pager options is illustrated below:
 ```
 <Pager
    url={dataUrl}
+   enablePageOne={true} //By default, 'page=1' is ignored. Set as true to allow injecting '?page=1' into url
    pageContents={(pageContent) => setPagerData(pageContent)}
    type="mini" //options include mini/more/constant
    authentication={false} //Boolean. only available if using the authentication module
