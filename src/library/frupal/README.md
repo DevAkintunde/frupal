@@ -1,6 +1,6 @@
 # Frupal, a Drupal React JS library
 
-(Update: Pager UI v23 now injects 'page=1' into the url; which now supports proper pagination.
+(Update: Pager UI v23+ now injects 'page=1' into the url; which now supports proper pagination.
 Nested pagination temporarily not support else such nested pager must be set to 'constant' type.
 You can keep using v22 if you need nested pagination.)
 
@@ -40,7 +40,7 @@ To use the authenticated (logged in user specific processes) specific context an
 library.
 Like This:
 `<Authorization app={<App />} />`
-This allows 'profile' context amongs others to be available for use by simply importing React context API. Maybe i'll attach an issue or page to show this feature at work soon.
+This allows 'profile' context among others to be available for use by simply importing React context API. Maybe I'll attach an issue or page to show this feature at work soon.
 
 ## How to Use
 
@@ -105,7 +105,7 @@ can always fetch from there to keep track of returning signed in users.
 
 if you are using 'Entity Router' Module for routing uri and subrequests Module for simultaneous multiple requests, then set either or both as true. Entity Router feature is disabled by default however the Subrequest module feature is yet to be implemented. Pardon me.
 
-Default Drupal profile fields (User entity fields) will be retruned with your response if you are using the Login() function (see below sections) and can be imported to your App with the profile context by...
+Default Drupal profile fields (User entity fields) will be returned with your response if you are using the Login() function (see below sections) and can be imported to your App with the profile context by...
 
 `import Profile from "frupal/Authorization";`
 and providing context
@@ -120,7 +120,7 @@ If you which to automatically include custom profile field to your app however, 
 
 profile_fields: ["field_first_name", "field_last_name", "field_phone_nos"]
 
-Please follow this partner for this to work
+Please follow this pattern for this to work
 
 1. Only drupal machine names are valid.
 2. Referenced fields should be preceeded with a square bracket containing 'relation'

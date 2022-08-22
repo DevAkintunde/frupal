@@ -41,7 +41,10 @@ const config = {
     userConfig && userConfig.authenticationMethod
       ? userConfig.authenticationMethod
       : "access_token",
-  saveTokenToLocalStorage: true,
+  saveTokenToLocalStorage:
+    userConfig && userConfig.saveTokenToLocalStorage
+      ? userConfig.saveTokenToLocalStorage
+      : false,
 };
 export const frupal = uri ? config : null;
 

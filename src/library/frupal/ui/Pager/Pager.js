@@ -82,13 +82,23 @@ const Pager = ({
       : thisPager;
 
   //reset mounted pager and unrelated page navigation
+  // value: 0 for grand state on entry into a pagerUI enabled page
+  // value: 1 allows 'page' param function normally
+  // value: 2 resets pagerUI on location Url change
+  const [firstLandingUrl, setFirstLandingUrl] = useState(0);
   useEffect(() => {
     if (url) {
-      //setOffset({ number: 0, direction: "next" });
-      setFirstPagerFetch(true);
-      //setPagerer({ direction: "+", trigger: "" });
+      setFirstLandingUrl((prev) => (prev === 0 ? 1 : 2));
     }
   }, [url]);
+  useEffect(() => {
+    if (firstLandingUrl === 2) {
+      setFirstPagerFetch(true);
+      setOffset({ number: 0, direction: "next" });
+      setPagerer({ direction: "+", trigger: "" });
+      setFirstLandingUrl(1);
+    }
+  }, [firstLandingUrl]);
 
   //use to controll rerendering on useEffects
   //triggered by pagerer which has multiple dependencies

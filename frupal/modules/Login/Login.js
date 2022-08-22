@@ -3,15 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = Login;
+exports.Login = void 0;
 
 var _defaultConfig = require("../../defaultConfig");
 
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function Login(data) {
+var Login = function Login(data) {
   /*
     Available data importable options
     Login({
@@ -96,8 +92,6 @@ function Login(data) {
       statusCode: ""
     };
   }
-}
-
-Login.propTypes = {
-  app: _propTypes.default.func
 };
+
+exports.Login = Login;

@@ -1,7 +1,6 @@
 import { frupal } from "../../defaultConfig";
-import PropTypes from "prop-types";
 
-export default function Login(data) {
+export const Login = (data) => {
   /*
     Available data importable options
     Login({
@@ -114,8 +113,4 @@ export default function Login(data) {
       statusCode: "",
     };
   }
-}
-
-Login.propTypes = {
-  app: PropTypes.func,
 };
